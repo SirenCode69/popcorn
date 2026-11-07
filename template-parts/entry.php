@@ -1,0 +1,1 @@
+<article <?php post_class('pc-entry'); ?>><?php if (has_post_thumbnail()) { echo popcorn_image(get_post_thumbnail_id(), 'large', ['alt' => get_the_title()]); } ?><header><h1><?php the_title(); ?></h1></header><div class="pc-entry__content"><?php the_content(); wp_link_pages(); ?></div></article>

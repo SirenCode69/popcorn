@@ -1,0 +1,63 @@
+name: Publish Popcorn package
+
+"on":
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Published release tag
+        required: true
+        default: v1.0.0
+        type: string
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    if: ${{ github.event_name == 'workflow_dispatch' || !github.event.release.prerelease }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Download and verify ORAS
+        shell: bash
+        run: |
+          archive="$RUNNER_TEMP/oras.tar.gz"
+          curl --fail --silent --show-error --location --retry 3 \
+            https://github.com/oras-project/oras/releases/download/v1.3.4/oras_1.3.4_linux_amd64.tar.gz \
+            --output "$archive"
+          echo "f27adb935022d94df8dc77719c322dda592c78a0d57a6f7dcdd8d900b248c454  $archive" | sha256sum --check
+          tar -xzf "$archive" -C "$RUNNER_TEMP" oras
+          echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
+
+      - name: Publish WordPress ZIPs
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag || github.event.release.tag_name }}
+        run: |
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          version=${RELEASE_TAG#v}
+          mkdir release
+          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --dir release \
+            --pattern "*.zip" --pattern SHA256SUMS --pattern manifest.json
+          revision=$(gh api "repos/$GITHUB_REPOSITORY/commits/$RELEASE_TAG" --jq .sha)
+          cd release
+          sha256sum --check SHA256SUMS
+
+          printf '%s' "$GH_TOKEN" | oras login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+          oras push "ghcr.io/${GITHUB_REPOSITORY,,}:$RELEASE_TAG" \
+            --artifact-type application/vnd.popcorn.wordpress.bundle.v1 \
+            --annotation "org.opencontainers.image.source=https://github.com/$GITHUB_REPOSITORY" \
+            --annotation "org.opencontainers.image.description=Popcorn theme, child theme and plugin ZIPs for WordPress" \
+            --annotation "org.opencontainers.image.licenses=GPL-2.0-or-later" \
+            --annotation "org.opencontainers.image.version=$version" \
+            --annotation "org.opencontainers.image.revision=$revision" \
+            "popcorn-release-$version.zip:application/zip" \
+            "popcorn-$version.zip:application/zip" \
+            "popcorn-child-$version.zip:application/zip" \
+            "popcorn-core-$version.zip:application/zip" \
+            "popcorn-auth-$version.zip:application/zip" \
+            "popcorn-subscriptions-$version.zip:application/zip" \
+            SHA256SUMS:text/plain manifest.json:application/json

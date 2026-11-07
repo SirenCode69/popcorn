@@ -1,0 +1,21 @@
+.pc-slider{position:relative;min-width:0;overflow:hidden}.pc-slider__track{display:flex}.pc-slider__slide{flex:none;width:100%;min-width:0}
+.pc-slider-section[hidden]{display:none}
+.pc-slider-section--posters .pc-slider__slide{width:calc((100% - 80px)/6);height:auto}
+.pc-slider[data-pc-slider=cards]{padding:4px 4px 18px;margin-inline:-4px}.pc-slider[data-pc-slider=cards]:not(.swiper-initialized){overflow-x:auto;scrollbar-width:thin}.pc-slider[data-pc-slider=cards]:not(.swiper-initialized) .pc-slider__track{gap:16px}
+.pc-slider__head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px}.pc-slider__head h2{margin:0;color:var(--pc-ink);font-size:22px;line-height:1.5;font-weight:850}
+.pc-slider__tools{display:flex;align-items:center;gap:16px;flex:none}.pc-slider__more{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;color:var(--pc-accent);white-space:nowrap}.pc-slider__more .pc-icon{width:15px;height:15px}.pc-slider__more:focus-visible{outline:3px solid var(--pc-accent);outline-offset:4px;border-radius:var(--pc-radius)}.pc-slider__empty{min-height:140px}.pc-slider__empty p{margin:0}
+.pc-slider__navigation{display:flex;gap:7px}.pc-slider__navigation[hidden]{display:none}.pc-slider__navigation button{display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid var(--pc-line);border-radius:var(--pc-radius);background:var(--pc-paper);color:var(--pc-ink);transition:color .2s,border-color .2s,background .2s}.pc-slider__navigation button:hover{color:var(--pc-accent);border-color:var(--pc-accent);background:var(--pc-accent-soft)}.pc-slider__navigation button:focus-visible{outline:3px solid var(--pc-accent);outline-offset:3px}.pc-slider__navigation button:disabled{opacity:.4;cursor:default}.pc-slider__navigation .swiper-button-lock{display:none}.pc-slider__navigation .pc-icon{width:17px;height:17px}
+.pc-slider__status{display:grid;place-items:center;min-height:240px;width:100%}.pc-genres .pc-slider__status{min-height:174px}.pc-home__people .pc-slider__status{min-height:220px}.pc-slider__status [hidden],.pc-slider__empty[hidden]{display:none}.pc-slider__status button{padding:10px 18px;border:1px solid var(--pc-accent);border-radius:var(--pc-radius);background:var(--pc-accent-soft);color:var(--pc-accent);font:inherit;font-weight:800;cursor:pointer}.pc-slider__status button:hover{background:var(--pc-accent);color:#fff}.pc-slider__status button:focus-visible{outline:3px solid var(--pc-accent);outline-offset:3px}
+@media(max-width:640px){.pc-slider__head{gap:12px;margin-bottom:13px}.pc-slider__head h2{font-size:19px;min-width:0}.pc-slider__tools{gap:9px}.pc-slider__more{font-size:11px}.pc-slider__navigation button{width:34px;height:34px}.pc-slider[data-pc-slider=cards]:not(.swiper-initialized) .pc-slider__track{gap:12px}}
+@media(max-width:1100px) and (min-width:641px){.pc-slider-section--posters .pc-slider__slide{width:calc((100% - 48px)/4)}}
+@media(max-width:850px) and (min-width:641px){.pc-slider-section--posters .pc-slider__slide{width:calc((100% - 32px)/3)}}
+@media(max-width:640px){.pc-slider-section--posters .pc-slider__slide{width:calc((100% - 12px)/2)}}
+@media(prefers-reduced-motion:reduce){.pc-slider__navigation button{transition:none}}
+
+.pc-slider-section--stories .pc-slider__slide{width:calc((100% - 48px)/4);height:auto}.pc-slider-section--stories .pc-blog-card{height:100%}.pc-slider-section--stories .pc-blog-card__body{flex:1}
+@media(max-width:1250px){.pc-slider-section--stories .pc-slider__slide{width:calc((100% - 32px)/3)}}
+@media(max-width:1023px){.pc-slider-section--stories .pc-slider__slide{width:calc((100% - 16px)/2)}}
+@media(max-width:640px){.pc-slider-section--stories .pc-slider__slide{width:100%}}
+.pc-slider-section--people .pc-slider__slide{width:166px;height:auto}
+.pc-slider__head h2 .pc-slider__count{display:inline-flex;align-items:center;justify-content:center;min-width:26px;min-height:26px;padding:3px 8px;margin-inline-start:6px;vertical-align:middle;border-radius:calc(var(--pc-radius)/2);background:var(--pc-accent-soft);color:var(--pc-accent);font-size:11px;font-weight:800}
+@media(max-width:640px){.pc-slider-section--people .pc-slider__slide{width:136px}}
